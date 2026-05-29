@@ -11,8 +11,8 @@ export const beijingAttractions = [
       'Walking along the wall, you will encounter watchtowers, steep staircases, and breathtaking panoramas that make every step worthwhile.',
       'This UNESCO World Heritage Site is a testament to human perseverance and engineering genius that has stood for centuries.'
     ],
-    image: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1600&h=900&fit=crop',
+    image: 'https://plus.unsplash.com/premium_photo-1664304488525-44a96338c0cc?w=800&h=600&fit=crop&auto=format',
+    imageLarge: 'https://plus.unsplash.com/premium_photo-1664304488525-44a96338c0cc?w=1600&h=900&fit=crop&auto=format',
     rating: 4.8,
     openingHours: '7:30 AM – 5:30 PM (Apr–Oct), 8:00 AM – 5:00 PM (Nov–Mar)',
     ticketPrice: '¥40–65 (≈ $6–10)',

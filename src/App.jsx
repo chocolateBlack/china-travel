@@ -5,6 +5,7 @@ import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import Beijing from './pages/Beijing'
 import Chengdu from './pages/Chengdu'
+import Xinjiang from './pages/Xinjiang'
 import TravelGuide from './pages/TravelGuide'
 import About from './pages/About'
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/beijing" element={<Beijing />} />
           <Route path="/chengdu" element={<Chengdu />} />
+          <Route path="/xinjiang" element={<Xinjiang />} />
           <Route path="/travel-guide" element={<TravelGuide />} />
           <Route path="/about" element={<About />} />
         </Routes>

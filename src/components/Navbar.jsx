@@ -10,7 +10,18 @@ const navLinks = [
 const destinationLinks = [
   { path: '/beijing', label: 'Beijing' },
   { path: '/chengdu', label: 'Chengdu' },
+  { path: '/xinjiang', label: 'Xinjiang' },
 ]
+
+const whatsappLink = 'https://wa.me/8613810338903'
+
+function WhatsAppIcon({ className = 'w-5 h-5' }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12.04 2C6.55 2 2.08 6.43 2.08 11.87c0 1.75.47 3.46 1.35 4.96L2 22l5.32-1.39a10.05 10.05 0 0 0 4.72 1.19h.01c5.49 0 9.96-4.43 9.96-9.87C22 6.43 17.53 2 12.04 2Zm0 18.13h-.01a8.34 8.34 0 0 1-4.25-1.16l-.3-.18-3.15.82.84-3.05-.2-.31a8.14 8.14 0 0 1-1.26-4.38c0-4.52 3.73-8.2 8.32-8.2 2.22 0 4.31.86 5.88 2.41a8.13 8.13 0 0 1 2.44 5.82c.01 4.52-3.72 8.23-8.31 8.23Zm4.56-6.15c-.25-.12-1.48-.73-1.71-.81-.23-.08-.4-.12-.57.12-.17.25-.65.81-.8.98-.15.17-.29.19-.54.06-.25-.12-1.06-.39-2.02-1.24-.75-.66-1.25-1.48-1.4-1.73-.15-.25-.02-.38.11-.51.12-.12.25-.29.37-.43.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.57-1.36-.78-1.86-.2-.49-.41-.42-.57-.43h-.49c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.07s.89 2.4 1.01 2.57c.12.17 1.75 2.65 4.24 3.72.59.25 1.05.4 1.41.51.59.19 1.13.16 1.56.1.48-.07 1.48-.6 1.69-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z" />
+    </svg>
+  )
+}
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -124,6 +135,17 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open WhatsApp"
+              title="WhatsApp"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#25D366] text-white shadow-sm transition-all duration-200 hover:bg-[#1ebe5d] hover:shadow-md"
+            >
+              <WhatsAppIcon />
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -213,6 +235,19 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open WhatsApp"
+              className="flex w-full items-center gap-3 rounded-lg px-4 py-2 text-base font-medium text-white/90 transition-colors hover:bg-white/5 hover:text-white"
+            >
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white">
+                <WhatsAppIcon className="w-4 h-4" />
+              </span>
+              <span>WhatsApp</span>
+            </a>
           </div>
         </div>
       )}
