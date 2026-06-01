@@ -1,5 +1,16 @@
 import { Link } from 'react-router-dom'
 
+function handleAnchorClick(event, link) {
+  if (!link?.startsWith('#')) return
+
+  const target = document.querySelector(link)
+  if (!target) return
+
+  event.preventDefault()
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  window.history.replaceState(null, '', link)
+}
+
 export default function HeroSection({
   image,
   title,
@@ -34,6 +45,7 @@ export default function HeroSection({
           {primaryCta && (
             <Link
               to={primaryCtaLink || '#'}
+              onClick={(event) => handleAnchorClick(event, primaryCtaLink)}
               className="btn-primary text-lg px-8 py-4 inline-block"
             >
               {primaryCta}
@@ -42,6 +54,7 @@ export default function HeroSection({
           {secondaryCta && (
             <Link
               to={secondaryCtaLink || '#'}
+              onClick={(event) => handleAnchorClick(event, secondaryCtaLink)}
               className="btn-outline text-lg px-8 py-4 inline-block"
             >
               {secondaryCta}

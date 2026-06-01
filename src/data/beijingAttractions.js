@@ -55,8 +55,8 @@ export const beijingAttractions = [
       'Built in 1420, the entire complex embodies the ancient Chinese belief that heaven is round and earth is square, reflected in the shapes of its structures.',
       'The Echo Wall and the Triple Echo Stones are fascinating acoustic features that demonstrate the sophisticated engineering of ancient Chinese builders.'
     ],
-    image: 'https://images.unsplash.com/photo-1537531383496-f4749b8032cf?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1537531383496-f4749b8032cf?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Temple%20of%20Heaven%20-%20Hall%20of%20Prayer%20for%20Good%20Harvests.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Temple%20of%20Heaven%20-%20Hall%20of%20Prayer%20for%20Good%20Harvests.jpg?width=1600',
     rating: 4.7,
     openingHours: '6:00 AM – 9:00 PM (park), 8:00 AM – 5:30 PM (buildings)',
     ticketPrice: '¥34 (≈ $5) combined ticket, ¥15 (≈ $2) park only',
@@ -77,8 +77,8 @@ export const beijingAttractions = [
       'Empress Dowager Cixi extensively rebuilt the palace in the late 19th century using funds originally allocated for the modernization of the Chinese navy.',
       'A boat ride on Kunming Lake offers the most picturesque views of the palace complex, especially during sunset when the golden light reflects off the water.'
     ],
-    image: 'https://images.unsplash.com/photo-1599707367812-042b7e3a6345?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1599707367812-042b7e3a6345?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Summer%20Palace%2C%20Beijing.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Summer%20Palace%2C%20Beijing.jpg?width=1600',
     rating: 4.7,
     openingHours: '6:30 AM – 6:00 PM (Apr–Oct), 7:00 AM – 5:00 PM (Nov–Mar)',
     ticketPrice: '¥30 (≈ $4.50) entrance, ¥60 (≈ $9) combined ticket',

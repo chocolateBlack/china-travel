@@ -33,8 +33,8 @@ export const chengduAttractions = [
       'Local artisans demonstrate traditional crafts like shadow puppetry, sugar painting, and face-changing masks of Sichuan opera right on the street.',
       'Food lovers will delight in the endless array of Sichuan street snacks — from spicy rabbit heads to sweet rice balls — making it a culinary adventure as much as a cultural one.'
     ],
-    image: 'https://images.unsplash.com/photo-1528164344705-47542687000d?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1528164344705-47542687000d?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Jinli%20Street%2035230-Chengdu%20%2849068154576%29.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Jinli%20Street%2035230-Chengdu%20%2849068154576%29.jpg?width=1600',
     rating: 4.5,
     openingHours: 'Shops: 10:00 AM – 10:00 PM; street always accessible',
     ticketPrice: 'Free',
@@ -55,8 +55,8 @@ export const chengduAttractions = [
       'The bamboo-lined paths and ancient cypress trees create a tranquil atmosphere, offering a peaceful retreat from the bustle of modern Chengdu.',
       'History enthusiasts will appreciate the detailed inscriptions and stone tablets that chronicle the epic tales of loyalty, strategy, and honor from this pivotal era.'
     ],
-    image: 'https://images.unsplash.com/photo-1553522991-71439aa62779?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1553522991-71439aa62779?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Temple%20of%20Marquis%20Wu%2C%20Vorderseite.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Temple%20of%20Marquis%20Wu%2C%20Vorderseite.jpg?width=1600',
     rating: 4.4,
     openingHours: '8:00 AM – 6:30 PM (May–Oct), 8:00 AM – 6:00 PM (Nov–Apr)',
     ticketPrice: '¥50 (≈ $7.50)',
@@ -77,8 +77,8 @@ export const chengduAttractions = [
       'The museum houses precious editions of Du Fu\'s works, calligraphy by famous artists, and stone inscriptions that span over a thousand years of literary reverence.',
       'The tranquil Huanhua Stream and elegant gardens make this site a favorite for both literary pilgrims and those seeking a peaceful escape in the heart of Chengdu.'
     ],
-    image: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/DuFuHouse.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/DuFuHouse.jpg?width=1600',
     rating: 4.5,
     openingHours: '8:00 AM – 6:00 PM (summer), 8:00 AM – 5:30 PM (winter)',
     ticketPrice: '¥50 (≈ $7.50)',

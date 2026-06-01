@@ -11,9 +11,10 @@ import { beijingAttractions } from '../data/beijingAttractions'
 import { chengduAttractions } from '../data/chengduAttractions'
 import { xinjiangAttractions } from '../data/xinjiangAttractions'
 import { faqData } from '../data/faqData'
+import greatWallImage from '../../pic/greatwall.png'
 
 const heroImages = [
-  'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1600&h=900&fit=crop',
+  greatWallImage,
   'https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=1600&h=900&fit=crop',
   'https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=1600&h=900&fit=crop',
 ]
@@ -66,21 +67,25 @@ const destinations = [
 ]
 
 const galleryImages = [
-  { url: 'https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=600&h=800&fit=crop', alt: 'Great Wall at sunset' },
+  { url: greatWallImage, alt: 'Great Wall at sunset' },
   { url: 'https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=600&h=400&fit=crop', alt: 'Forbidden City' },
   { url: 'https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=600&h=400&fit=crop', alt: 'Giant Panda' },
   { url: 'https://images.unsplash.com/photo-1774686030653-770296f85625?w=600&h=400&fit=crop', alt: 'Kanas Lake in Xinjiang' },
-  { url: 'https://images.unsplash.com/photo-1537531383496-f4749b8032cf?w=600&h=400&fit=crop', alt: 'Temple of Heaven' },
-  { url: 'https://images.unsplash.com/photo-1528164344705-47542687000d?w=600&h=400&fit=crop', alt: 'Chengdu street scene' },
-  { url: 'https://images.unsplash.com/photo-1599707367812-042b7e3a6345?w=600&h=800&fit=crop', alt: 'Summer Palace' },
-  { url: 'https://images.unsplash.com/photo-1546956223-7ead4ec7b858?w=600&h=400&fit=crop', alt: 'Mount Qingcheng' },
+  { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Temple%20of%20Heaven%20-%20Hall%20of%20Prayer%20for%20Good%20Harvests.jpg?width=800', alt: 'Temple of Heaven' },
+  { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Jinli%20Street%2035230-Chengdu%20%2849068154576%29.jpg?width=800', alt: 'Jinli Ancient Street' },
+  { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Summer%20Palace%2C%20Beijing.jpg?width=800', alt: 'Summer Palace' },
+  { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/DuFuHouse.jpg?width=800', alt: 'Du Fu Thatched Cottage' },
   { url: 'https://images.unsplash.com/photo-1469521669194-babb45599def?w=600&h=400&fit=crop', alt: 'Chinese landscape' },
 ]
 
 export default function Home() {
   const fadeRef = useFadeIn()
 
-  const beijingHighlights = beijingAttractions.slice(0, 4)
+  const beijingHighlights = beijingAttractions.slice(0, 4).map((attraction) => (
+    attraction.id === 'great-wall'
+      ? { ...attraction, image: greatWallImage, imageLarge: greatWallImage }
+      : attraction
+  ))
   const chengduHighlights = chengduAttractions.slice(0, 4)
   const xinjiangHighlights = xinjiangAttractions.slice(0, 4)
   const destinationHighlights = [
@@ -96,7 +101,7 @@ export default function Home() {
         title="Discover the Magic of China"
         subtitle="From ancient wonders to modern marvels — your journey starts here"
         primaryCta="Explore Destinations"
-        primaryCtaLink="/#featured-destinations"
+        primaryCtaLink="#featured-destinations"
         secondaryCta="Read Travel Guide"
         secondaryCtaLink="/travel-guide"
       />
