@@ -2,18 +2,44 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import * as echarts from 'echarts'
 import chinaGeoJson from 'china-map-data/china'
 import BackToTop from '../components/BackToTop'
-import greatWallImage from '../../pic/greatwall.png'
-import greatWallCampImage from '../../pic/greatwallcamp.jpg'
-import {
-  chinaProvinces,
-  defaultProvinceImages,
-  provinceImageLibrary,
-} from '../data/chinaMapData'
+import { chinaProvinces } from '../data/chinaMapData'
 
-const imageAssets = {
-  greatWall: greatWallImage,
-  greatWallCamp: greatWallCampImage,
+const provincePhotoModules = import.meta.glob('../../pic/*/*.{jpg,jpeg,png,webp,avif,gif,JPG,JPEG,PNG,WEBP,AVIF,GIF}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+
+function formatPhotoTitle(fileName) {
+  const title = decodeURIComponent(fileName)
+    .replace(/\.[^.]+$/, '')
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+  return title || 'Travel Memory'
 }
+
+function buildProvinceImageLibrary() {
+  return Object.entries(provincePhotoModules).reduce((library, [path, url]) => {
+    const match = path.match(/\/pic\/([^/]+)\/([^/]+)$/)
+    if (!match) {
+      return library
+    }
+
+    const [, provinceId, fileName] = match
+    const images = library[provinceId] || []
+    images.push({
+      title: formatPhotoTitle(fileName),
+      url,
+    })
+    library[provinceId] = images.sort((a, b) => a.title.localeCompare(b.title))
+
+    return library
+  }, {})
+}
+
+const provinceImageLibrary = buildProvinceImageLibrary()
 
 const regionColors = {
   North: '#E8C86A',
@@ -26,12 +52,7 @@ const regionColors = {
 }
 
 function resolveImages(provinceId) {
-  const images = provinceImageLibrary[provinceId] || defaultProvinceImages
-
-  return images.map((image) => ({
-    ...image,
-    url: image.url || imageAssets[image.imageKey],
-  }))
+  return provinceImageLibrary[provinceId] || []
 }
 
 function resolveProvinceByChineseName(name) {
@@ -75,18 +96,18 @@ const photoSlots = [
   { x: 82, y: 80, rotate: 4, orientation: 'landscape' },
 ]
 
-function buildProvincePhotos(activeProvince) {
+function buildProvincePhotos(activeProvince, orientationByUrl) {
   return resolveImages(activeProvince.id).map((image, index) => ({
     ...photoSlots[index],
     ...image,
     id: `${activeProvince.id}-${image.title}`,
     province: activeProvince,
     active: true,
-    orientation: image.orientation || 'landscape',
+    orientation: orientationByUrl[image.url] || image.orientation || 'landscape',
   })).slice(0, photoSlots.length)
 }
 
-function PhotoWall({ photos, onActivateProvince, onOpenImage }) {
+function PhotoWall({ photos, onActivateProvince, onOpenImage, onImageLoad }) {
   return (
     <>
       {photos.map((photo) => (
@@ -112,6 +133,7 @@ function PhotoWall({ photos, onActivateProvince, onOpenImage }) {
           <img
             src={photo.url}
             alt={`${photo.province.name} - ${photo.title}`}
+            onLoad={(event) => onImageLoad(photo.url, event.currentTarget)}
             className={`w-full object-cover ${
               photo.orientation === 'landscape' ? 'aspect-[16/10]' : 'aspect-[4/5]'
             }`}
@@ -122,37 +144,6 @@ function PhotoWall({ photos, onActivateProvince, onOpenImage }) {
         </button>
       ))}
     </>
-  )
-}
-
-function ProvincePanel({ province }) {
-  const images = resolveImages(province.id)
-
-  return (
-    <aside className="rounded-2xl border border-gray-100 bg-white p-6 shadow-xl">
-      <p className="text-xs uppercase tracking-[0.22em] text-china-red font-semibold">
-        {province.region}
-      </p>
-      <h2 className="mt-2 text-3xl font-display font-bold text-deep-blue">
-        {province.name}
-      </h2>
-      <p className="text-xl font-medium text-gold">{province.chineseName}</p>
-
-      <div className="mt-5 flex -space-x-3">
-        {images.slice(0, 3).map((image) => (
-          <img
-            key={image.title}
-            src={image.url}
-            alt={image.title}
-            className="h-16 w-16 rounded-full border-2 border-white object-cover shadow"
-          />
-        ))}
-      </div>
-
-      <p className="mt-5 text-sm leading-relaxed text-gray-600">
-        ECharts renders the province boundaries and handles hover states. The photo wall is linked to the active province and can be expanded as you add more local images.
-      </p>
-    </aside>
   )
 }
 
@@ -201,9 +192,20 @@ export default function ChinaMap() {
   const chartInstanceRef = useRef(null)
   const [activeProvinceId, setActiveProvinceId] = useState('beijing')
   const [previewPhoto, setPreviewPhoto] = useState(null)
+  const [orientationByUrl, setOrientationByUrl] = useState({})
   const activeProvince = getProvince(activeProvinceId) || chinaProvinces[0]
   const activeImages = useMemo(() => resolveImages(activeProvince.id), [activeProvince.id])
-  const wallPhotos = useMemo(() => buildProvincePhotos(activeProvince), [activeProvince])
+  const wallPhotos = useMemo(
+    () => buildProvincePhotos(activeProvince, orientationByUrl),
+    [activeProvince, orientationByUrl]
+  )
+
+  const handleImageLoad = (url, image) => {
+    const orientation = image.naturalHeight > image.naturalWidth ? 'portrait' : 'landscape'
+    setOrientationByUrl((current) => (
+      current[url] === orientation ? current : { ...current, [url]: orientation }
+    ))
+  }
 
   useEffect(() => {
     echarts.registerMap('china', chinaGeoJson)
@@ -224,6 +226,7 @@ export default function ChinaMap() {
       }
     }
 
+    chart.on('mouseover', 'series.map', handleProvinceHover)
     chart.on('click', 'series.map', handleProvinceHover)
 
     const handleResize = () => chart.resize()
@@ -307,7 +310,7 @@ export default function ChinaMap() {
             </p>
             <h1 className="section-title mb-3">China Travel Memory Map</h1>
             <p className="section-subtitle">
-              Click a province to reveal its travel memories and open each photo for a closer look.
+              Move across the provinces to reveal travel memories, then open each photo for a closer look.
             </p>
           </div>
 
@@ -333,6 +336,7 @@ export default function ChinaMap() {
               photos={wallPhotos}
               onActivateProvince={setActiveProvinceId}
               onOpenImage={setPreviewPhoto}
+              onImageLoad={handleImageLoad}
             />
 
             <div className="absolute left-1/2 top-[45%] z-20 h-[620px] w-[min(58%,660px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-white/60 bg-[#ebe3d6] shadow-2xl">
@@ -353,17 +357,26 @@ export default function ChinaMap() {
                   </h2>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {activeImages.map((image) => (
+                  {activeImages.length > 0 ? activeImages.map((image) => (
                     <button
                       key={image.title}
                       type="button"
                       onClick={() => setPreviewPhoto({ ...image, province: activeProvince })}
                       className="inline-flex items-center gap-2 rounded-full bg-warm-gray py-1 pl-1 pr-3 text-xs font-medium text-deep-blue transition-colors hover:bg-china-red hover:text-white"
                     >
-                      <img src={image.url} alt={image.title} className="h-7 w-7 rounded-full object-cover" />
+                      <img
+                        src={image.url}
+                        alt={image.title}
+                        onLoad={(event) => handleImageLoad(image.url, event.currentTarget)}
+                        className="h-7 w-7 rounded-full object-cover"
+                      />
                       {image.title}
                     </button>
-                  ))}
+                  )) : (
+                    <span className="rounded-full bg-warm-gray px-4 py-2 text-xs font-medium text-gray-500">
+                      No photos yet
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
