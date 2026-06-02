@@ -1,203 +1,153 @@
-import { Link } from 'react-router-dom'
-import HeroSection from '../components/HeroSection'
 import BackToTop from '../components/BackToTop'
 import useFadeIn from '../hooks/useFadeIn'
+
+const advantages = [
+  'Quick response - 24/7 customer support, always ready to help',
+  'High standard of service - Consistent quality from inquiry to drop-off',
+  'No shopping stops, no hidden costs - Truly transparent pricing',
+  'Very experienced guide & driver - Professional, knowledgeable, and reliable',
+  'Comfortable air-conditioned vehicles - Safe and pleasant travel in every season',
+]
+
+const teamMembers = [
+  { name: 'Leo Li', role: 'CEO', featured: true },
+  { name: 'Luisa Liu', role: 'English guide', featured: true },
+  { name: 'Jack Zhang', role: 'English / Italian guide', note: '10+ years leading tours' },
+  { name: 'Jack Wang', role: 'Spanish guide' },
+  { name: 'Wendy Liu', role: 'France guide' },
+  { name: 'Linda Zhao', role: 'English guide' },
+  { name: 'Jason Liu', role: 'English guide' },
+  { name: 'Elisa Ma', role: 'Italian guide' },
+  { name: 'Lucia Lin', role: 'Italian guide' },
+  { name: 'Ethan Lin', role: 'France guide' },
+  { name: 'James Liu', role: 'Spanish guide' },
+  { name: 'Lucas Zhou', role: 'Driver leader' },
+  { name: 'Anna Su', role: 'Planner' },
+  { name: 'Roy Liu', role: 'Planner' },
+  { name: 'David Zhang', role: 'Planner' },
+  { name: 'Mark Liu', role: 'Business connection' },
+]
+
+const comments = [
+  'We traveled to China with our child and were so lucky to have Mr. Zhang as our guide. He did not just show us the Great Wall and Forbidden City - he brought them to life with stories and history. The local market tour was a highlight for our whole family. We learned so much about Chinese culture and daily life. Mr. Zhang and his team were warm, professional, and incredibly kind to our kid. We will definitely come back and book with him again. Highly recommended!',
+  'We have had many tour guides in different countries, but Mr. Wang stands out for his deep knowledge of Chinese history and philosophy. At the Forbidden City, he did not just tell us the names of halls - he explained the ideas of Confucius and how they shaped the emperor’s rule. On the Great Wall, he spoke about military strategies and ancient border control. Our minds were as enriched as our eyes. This is the guide you want if you truly want to understand China.',
+  'Before meeting Mr. Zhang, we almost booked a big group tour. Thank goodness we did not. With Mr. Zhang and his small team, we never felt rushed or herded like sheep. He gave us time to linger where we wanted - our child spent 20 minutes watching a kite maker in a park, and Mr. Zhang did not mind at all. He also avoided all the tourist-trap shops. Every recommendation he made was honest and high-quality. If you hate rigid itineraries and pushy sales, go with Mr. Zhang.',
+  'This was the trip of a lifetime for our family, thanks to Mr. Li. He is not just a guide - he is a storyteller, a teacher, and a friend. He took us beyond the tourist spots: local markets, hidden alleys, and family-run eateries. Our child was engaged the whole time, asking questions and learning about Chinese culture. The Great Wall and Forbidden City were incredible, but Mr. Zhang’s warmth made the real difference. We will definitely return and will recommend him to everyone we know.',
+]
+
+function getInitials(name) {
+  return name
+    .split(' ')
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
+}
+
+function TeamMemberCard({ member }) {
+  return (
+    <article className="rounded-xl bg-white p-5 text-center shadow-sm ring-1 ring-deep-blue/5 transition-shadow hover:shadow-md">
+      <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-deep-blue text-xl font-display font-bold text-gold shadow-inner">
+        {getInitials(member.name)}
+      </div>
+      <h3 className="font-display text-lg font-bold text-deep-blue">{member.name}</h3>
+      <p className="mt-1 text-sm font-medium text-china-red">{member.role}</p>
+      {member.note && (
+        <p className="mt-2 text-xs uppercase tracking-[0.18em] text-gray-500">{member.note}</p>
+      )}
+      {member.featured && (
+        <p className="mt-3 rounded-full bg-gold/15 px-3 py-1 text-xs font-semibold text-deep-blue">
+          Photo ready
+        </p>
+      )}
+    </article>
+  )
+}
 
 export default function About() {
   const fadeRef = useFadeIn()
 
   return (
     <div ref={fadeRef}>
-      {/* Hero */}
-      <HeroSection
-        image="https://images.unsplash.com/photo-1546956223-7ead4ec7b858?w=1600&h=900&fit=crop"
-        title="About ChinaTravel"
-        subtitle="Bridging cultures through the wonder of travel"
-        overlay="bg-black/55"
-      />
-
-      {/* Mission */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 fade-in">
-            <h2 className="section-title">Our Mission</h2>
-          </div>
-          <div className="space-y-6 text-gray-600 text-lg leading-relaxed fade-in">
-            <p>
-              ChinaTravel was born from a simple belief: that the best way to bridge cultures
-              is through personal experience. China is one of the world's most fascinating
-              destinations, yet many travelers hesitate because of perceived barriers — language,
-              payments, navigation, or simply not knowing where to start.
-            </p>
-            <p>
-              We created this guide to change that. Our mission is to make China accessible,
-              inviting, and unforgettable for English-speaking travelers who have never visited
-              before. We provide practical, honest, and up-to-date information that helps you
-              plan with confidence and travel with ease.
-            </p>
-            <p>
-              Every recommendation on this site comes from real travel experience. We believe
-              that China's ancient wonders and modern marvels deserve to be explored firsthand,
-              not just seen in photos. And we are here to help you take that first step.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* What We Offer */}
-      <section className="py-16 md:py-24 bg-warm-gray">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 fade-in">
-            <h2 className="section-title">What We Offer</h2>
-            <p className="section-subtitle">
-              Comprehensive resources to plan your perfect China trip
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-2xl p-8 shadow-md card-hover fade-in text-center">
-              <div className="w-16 h-16 bg-china-red/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                <span className="text-4xl">🗺️</span>
-              </div>
-              <h3 className="text-xl font-display font-bold text-deep-blue mb-3">
-                Curated Destinations
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                In-depth guides to Beijing and Chengdu with detailed attraction information,
-                practical tips, and insider recommendations. Every entry includes dual-currency
-                pricing, transport directions, and honest advice.
-              </p>
-            </div>
-            <div className="bg-white rounded-2xl p-8 shadow-md card-hover fade-in text-center">
-              <div className="w-16 h-16 bg-china-red/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                <span className="text-4xl">📖</span>
-              </div>
-              <h3 className="text-xl font-display font-bold text-deep-blue mb-3">
-                Practical Travel Guide
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                From visa requirements and payment setup to getting around and cultural etiquette,
-                our comprehensive travel guide covers everything you need to know before and during
-                your trip to China.
-              </p>
-            </div>
-            <div className="bg-white rounded-2xl p-8 shadow-md card-hover fade-in text-center">
-              <div className="w-16 h-16 bg-china-red/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                <span className="text-4xl">🍜</span>
-              </div>
-              <h3 className="text-xl font-display font-bold text-deep-blue mb-3">
-                Food & Culture
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                Explore China's incredible culinary scene with our food guides, spice-level
-                ratings, and must-try recommendations. We also cover cultural norms, etiquette,
-                and useful phrases to help you connect with locals.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Values */}
-      <section className="py-16 md:py-24">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 fade-in">
-            <h2 className="section-title">Our Values</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="fade-in flex items-start gap-4">
-              <div className="w-12 h-12 bg-china-red/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                <span className="text-2xl">🎯</span>
-              </div>
-              <div>
-                <h3 className="text-lg font-display font-bold text-deep-blue mb-2">Accuracy First</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  We verify every piece of information — prices, opening hours, transport details —
-                  to ensure you can plan with confidence. Travel info changes fast, and we strive
-                  to keep everything current.
-                </p>
-              </div>
-            </div>
-            <div className="fade-in flex items-start gap-4">
-              <div className="w-12 h-12 bg-china-red/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                <span className="text-2xl">🌍</span>
-              </div>
-              <div>
-                <h3 className="text-lg font-display font-bold text-deep-blue mb-2">Cultural Respect</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  We promote respectful, responsible tourism. Our guides include cultural etiquette,
-                  local customs, and tips for being a thoughtful guest in the communities you visit.
-                </p>
-              </div>
-            </div>
-            <div className="fade-in flex items-start gap-4">
-              <div className="w-12 h-12 bg-china-red/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                <span className="text-2xl">🤝</span>
-              </div>
-              <div>
-                <h3 className="text-lg font-display font-bold text-deep-blue mb-2">Accessibility</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  China can seem intimidating to first-time visitors. We break down barriers with
-                  clear, jargon-free information that makes travel planning simple and stress-free.
-                </p>
-              </div>
-            </div>
-            <div className="fade-in flex items-start gap-4">
-              <div className="w-12 h-12 bg-china-red/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                <span className="text-2xl">✨</span>
-              </div>
-              <div>
-                <h3 className="text-lg font-display font-bold text-deep-blue mb-2">Authentic Experience</h3>
-                <p className="text-gray-600 leading-relaxed">
-                  We go beyond tourist hotspots to recommend authentic local experiences — the
-                  hidden teahouses, the family-run noodle shops, the neighborhoods where real life
-                  unfolds.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact */}
-      <section className="py-16 md:py-24 bg-deep-blue text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-            Get in Touch
-          </h2>
-          <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-            Have questions about traveling to China? Want to share your travel story?
-            We would love to hear from you.
+      <section className="bg-deep-blue px-4 pb-16 pt-32 text-center text-white sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.25em] text-gold">
+            Chinatravel.com
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-            <div className="bg-white/10 rounded-xl p-6">
-              <span className="text-3xl mb-3 block">📧</span>
-              <h3 className="font-display font-semibold text-gold mb-1">Email</h3>
-              <p className="text-white/70 text-sm">hello@chinatravel.com</p>
-            </div>
-            <div className="bg-white/10 rounded-xl p-6">
-              <span className="text-3xl mb-3 block">📱</span>
-              <h3 className="font-display font-semibold text-gold mb-1">WeChat</h3>
-              <p className="text-white/70 text-sm">ChinaTravel_Official</p>
-            </div>
-            <div className="bg-white/10 rounded-xl p-6">
-              <span className="text-3xl mb-3 block">📸</span>
-              <h3 className="font-display font-semibold text-gold mb-1">Instagram</h3>
-              <p className="text-white/70 text-sm">@chinatravel</p>
-            </div>
+          <h1 className="mt-4 font-display text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
+            About Us
+          </h1>
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/80 md:text-xl">
+            Your trusted local travel expert for memorable journeys across China
+          </p>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center fade-in">
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-china-red">Who We Are</p>
+            <h2 className="section-title mt-3">Local Expertise, Thoughtful Service</h2>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/beijing" className="btn-primary inline-flex items-center justify-center gap-2">
-              Explore Beijing
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-            <Link to="/chengdu" className="btn-gold inline-flex items-center justify-center gap-2">
-              Explore Chengdu
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
+          <div className="space-y-6 text-lg leading-relaxed text-gray-600 fade-in">
+            <p className="text-xl font-medium text-deep-blue">
+              Your trusted local travel expert, offering quality tour packages across China’s top cities.
+            </p>
+            <p>
+              Founded in 2012 and headquartered in Beijing, Chinatravel.com is one of China’s leading online travel agencies. We specialize in providing professional, distinctive, and diverse travel services for inbound visitors, turning every trip into a truly memorable vacation.
+            </p>
+            <p>
+              With over a decade of experience, honest business practices, and efficient customer service, we have earned an excellent reputation among travelers from around the world.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-warm-gray py-16 md:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center fade-in">
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-china-red">Why Choose Us</p>
+            <h2 className="section-title mt-3">Just Go. We’ll Handle the Rest.</h2>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-5">
+            {advantages.map((advantage, index) => (
+              <div key={advantage} className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-deep-blue/5 fade-in">
+                <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-china-red text-sm font-bold text-white">
+                  {index + 1}
+                </span>
+                <p className="text-sm leading-relaxed text-gray-700">{advantage}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center fade-in">
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-china-red">Our Team</p>
+            <h2 className="section-title mt-3">Guides, Planners, and Drivers You Can Trust</h2>
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+            {teamMembers.map((member) => (
+              <TeamMemberCard key={member.name} member={member} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-deep-blue py-16 text-white md:py-24">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center fade-in">
+            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-gold">Leave a Comment</p>
+            <h2 className="mt-3 font-display text-3xl font-bold md:text-4xl">Traveler Stories</h2>
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {comments.map((comment) => (
+              <blockquote key={comment.slice(0, 40)} className="rounded-xl bg-white/10 p-6 text-white/85 shadow-sm ring-1 ring-white/10 fade-in">
+                <p className="leading-relaxed">“{comment}”</p>
+              </blockquote>
+            ))}
           </div>
         </div>
       </section>

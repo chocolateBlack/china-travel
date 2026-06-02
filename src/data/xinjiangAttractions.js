@@ -47,8 +47,8 @@ export const xinjiangAttractions = [
       'The old city is best explored slowly on foot, leaving time for tea, naan, grilled skewers, and local craft shops.',
       'It is also a natural gateway for routes toward the Pamirs and the Karakoram Highway.'
     ],
-    image: 'https://images.unsplash.com/photo-1669732476127-a74b2e85328b?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1669732476127-a74b2e85328b?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Kashgar%20old%20city%20IGP3780.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Kashgar%20old%20city%20IGP3780.jpg?width=1600',
     rating: 4.7,
     openingHours: 'Old city streets are generally open daily; shops and markets vary',
     ticketPrice: 'Free to walk; guided tours and performances vary',

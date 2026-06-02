@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
 
 function handleAnchorClick(event, link) {
   if (!link?.startsWith('#')) return
@@ -13,6 +14,7 @@ function handleAnchorClick(event, link) {
 
 export default function HeroSection({
   image,
+  images,
   title,
   subtitle,
   primaryCta,
@@ -21,15 +23,41 @@ export default function HeroSection({
   secondaryCtaLink,
   overlay = 'bg-black/40',
 }) {
+  const carouselImages = useMemo(() => (
+    images?.length ? images : [image].filter(Boolean)
+  ), [image, images])
+  const [activeImageIndex, setActiveImageIndex] = useState(0)
+
+  useEffect(() => {
+    setActiveImageIndex(0)
+  }, [carouselImages.length])
+
+  useEffect(() => {
+    if (carouselImages.length <= 1) {
+      return undefined
+    }
+
+    const interval = window.setInterval(() => {
+      setActiveImageIndex((index) => (index + 1) % carouselImages.length)
+    }, 4500)
+
+    return () => window.clearInterval(interval)
+  }, [carouselImages.length])
+
   return (
     <section className="relative h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${image})` }}
-      >
-        <div className={`absolute inset-0 ${overlay}`}></div>
-      </div>
+      {/* Background Images */}
+      {carouselImages.map((carouselImage, index) => (
+        <div
+          key={carouselImage}
+          className={`absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 ${
+            index === activeImageIndex ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{ backgroundImage: `url(${carouselImage})` }}
+          aria-hidden="true"
+        />
+      ))}
+      <div className={`absolute inset-0 ${overlay}`}></div>
 
       {/* Content */}
       <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
@@ -69,6 +97,23 @@ export default function HeroSection({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
       </div>
+
+      {carouselImages.length > 1 && (
+        <div className="absolute bottom-20 left-1/2 z-10 flex -translate-x-1/2 gap-2" aria-label="Hero image carousel">
+          {carouselImages.map((carouselImage, index) => (
+            <button
+              key={carouselImage}
+              type="button"
+              onClick={() => setActiveImageIndex(index)}
+              className={`h-2.5 rounded-full transition-all ${
+                index === activeImageIndex ? 'w-8 bg-white' : 'w-2.5 bg-white/50 hover:bg-white/75'
+              }`}
+              aria-label={`Show image ${index + 1}`}
+              aria-current={index === activeImageIndex}
+            />
+          ))}
+        </div>
+      )}
     </section>
   )
 }

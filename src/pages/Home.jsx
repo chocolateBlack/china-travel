@@ -13,11 +13,17 @@ import { xinjiangAttractions } from '../data/xinjiangAttractions'
 import { faqData } from '../data/faqData'
 import greatWallImage from '../../pic/greatwall.png'
 
-const heroImages = [
-  greatWallImage,
-  'https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=1600&h=900&fit=crop',
-  'https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?w=1600&h=900&fit=crop',
-]
+const homeCarouselModules = import.meta.glob('../../pic/home_carousel/*.{jpg,jpeg,png,webp,avif,gif,JPG,JPEG,PNG,WEBP,AVIF,GIF}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+
+const heroImages = Object.entries(homeCarouselModules)
+  .sort(([pathA], [pathB]) => pathA.localeCompare(pathB))
+  .map(([, url]) => url)
+
+const heroCarouselImages = heroImages.length > 0 ? heroImages : [greatWallImage]
 
 const travelEssentials = [
   {
@@ -97,7 +103,8 @@ export default function Home() {
   return (
     <div ref={fadeRef}>
       <HeroSection
-        image={heroImages[0]}
+        image={heroCarouselImages[0]}
+        images={heroCarouselImages}
         title="Discover the Magic of China"
         subtitle="From ancient wonders to modern marvels — your journey starts here"
         primaryCta="Explore Destinations"

@@ -4,7 +4,7 @@ import chinaGeoJson from 'china-map-data/china'
 import BackToTop from '../components/BackToTop'
 import { chinaProvinces } from '../data/chinaMapData'
 
-const provincePhotoModules = import.meta.glob('../../pic/*/*.{jpg,jpeg,png,webp,avif,gif,JPG,JPEG,PNG,WEBP,AVIF,GIF}', {
+const provincePhotoModules = import.meta.glob('../../pic/province/*/*.{jpg,jpeg,png,webp,avif,gif,JPG,JPEG,PNG,WEBP,AVIF,GIF}', {
   eager: true,
   query: '?url',
   import: 'default',
@@ -22,7 +22,7 @@ function formatPhotoTitle(fileName) {
 
 function buildProvinceImageLibrary() {
   return Object.entries(provincePhotoModules).reduce((library, [path, url]) => {
-    const match = path.match(/\/pic\/([^/]+)\/([^/]+)$/)
+    const match = path.match(/\/pic\/province\/([^/]+)\/([^/]+)$/)
     if (!match) {
       return library
     }
@@ -57,6 +57,28 @@ function resolveImages(provinceId) {
 
 function resolveProvinceByChineseName(name) {
   return chinaProvinces.find((province) => province.chineseName === name)
+}
+
+function getProvinceDisplayName(province) {
+  return province.id === 'beijing' ? `★ ${province.name}` : province.name
+}
+
+function ProvinceDisplayName({ province }) {
+  if (province.id !== 'beijing') {
+    return province.name
+  }
+
+  return (
+    <span className="inline-flex items-center gap-1">
+      <span className="text-[#FFD400] drop-shadow-[0_1px_2px_rgba(91,59,0,0.65)]" aria-label="Capital">★</span>
+      {province.name}
+    </span>
+  )
+}
+
+function formatProvinceLabel(params) {
+  const province = resolveProvinceByChineseName(params.name)
+  return province?.id === 'beijing' ? `{capital|★} ${province.name}` : province?.name || params.name
 }
 
 function getProvince(provinceId) {
@@ -107,26 +129,25 @@ function buildProvincePhotos(activeProvince, orientationByUrl) {
   })).slice(0, photoSlots.length)
 }
 
-function PhotoWall({ photos, onActivateProvince, onOpenImage, onImageLoad }) {
+function PhotoWall({ photos, onOpenImage, onImageLoad }) {
   return (
-    <>
+    <div className="relative z-30 mt-5 grid grid-cols-2 gap-3 md:static md:mt-0 md:block">
       {photos.map((photo) => (
         <button
           key={photo.id}
           type="button"
-          onFocus={() => onActivateProvince(photo.province.id)}
           onClick={() => onOpenImage(photo)}
-          className={`absolute z-30 origin-center rounded-sm bg-white p-2 shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-china-red focus:ring-offset-2 ${
+          className={`origin-center rounded-sm bg-white p-2 shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-china-red focus:ring-offset-2 md:absolute md:z-30 md:left-[var(--photo-left)] md:top-[var(--photo-top)] md:[transform:translate(-50%,-50%)_rotate(var(--photo-rotate))] md:hover:[transform:translate(-50%,-50%)_rotate(var(--photo-rotate))_scale(1.16)] ${
             photo.orientation === 'landscape'
-              ? 'w-[132px] sm:w-[168px] md:w-[210px]'
-              : 'w-[96px] sm:w-[122px] md:w-[150px]'
+              ? 'w-full md:w-[clamp(160px,14vw,260px)]'
+              : 'mx-auto w-[76%] md:w-[clamp(120px,10vw,180px)]'
           } ${
-            'scale-110 shadow-2xl ring-2 ring-china-red hover:scale-125'
+            'shadow-2xl ring-2 ring-china-red hover:scale-105 md:hover:scale-100'
           }`}
           style={{
-            left: `${photo.x}%`,
-            top: `${photo.y}%`,
-            transform: `translate(-50%, -50%) rotate(${photo.rotate}deg)`,
+            '--photo-left': `${photo.x}%`,
+            '--photo-top': `${photo.y}%`,
+            '--photo-rotate': `${photo.rotate}deg`,
           }}
           aria-label={`View original image for ${photo.province.name}`}
         >
@@ -139,11 +160,11 @@ function PhotoWall({ photos, onActivateProvince, onOpenImage, onImageLoad }) {
             }`}
           />
           <span className="mt-2 block truncate text-xs font-semibold text-deep-blue">
-            {photo.province.chineseName}
+            <ProvinceDisplayName province={photo.province} />
           </span>
         </button>
       ))}
-    </>
+    </div>
   )
 }
 
@@ -177,9 +198,11 @@ function ImageLightbox({ photo, onClose }) {
           className="max-h-[82vh] w-full rounded-xl object-contain shadow-2xl"
         />
         <div className="mt-3 rounded-xl bg-white/95 px-4 py-3 shadow-xl">
-          <p className="font-display text-xl font-bold text-deep-blue">{photo.title}</p>
+          <p className="font-display text-xl font-bold text-deep-blue">
+            <ProvinceDisplayName province={photo.province} />
+          </p>
           <p className="text-sm text-gray-600">
-            {photo.province.name} / {photo.province.chineseName}
+            Travel memory
           </p>
         </div>
       </div>
@@ -190,14 +213,17 @@ function ImageLightbox({ photo, onClose }) {
 export default function ChinaMap() {
   const chartRef = useRef(null)
   const chartInstanceRef = useRef(null)
-  const [activeProvinceId, setActiveProvinceId] = useState('beijing')
+  const mapOptionInitializedRef = useRef(false)
+  const [selectedProvinceId, setSelectedProvinceId] = useState('beijing')
+  const [hoverProvinceId, setHoverProvinceId] = useState(null)
   const [previewPhoto, setPreviewPhoto] = useState(null)
   const [orientationByUrl, setOrientationByUrl] = useState({})
-  const activeProvince = getProvince(activeProvinceId) || chinaProvinces[0]
-  const activeImages = useMemo(() => resolveImages(activeProvince.id), [activeProvince.id])
+  const selectedProvince = getProvince(selectedProvinceId) || chinaProvinces[0]
+  const displayProvince = getProvince(hoverProvinceId) || selectedProvince
+  const activeImages = useMemo(() => resolveImages(selectedProvince.id), [selectedProvince.id])
   const wallPhotos = useMemo(
-    () => buildProvincePhotos(activeProvince, orientationByUrl),
-    [activeProvince, orientationByUrl]
+    () => buildProvincePhotos(selectedProvince, orientationByUrl),
+    [selectedProvince, orientationByUrl]
   )
 
   const handleImageLoad = (url, image) => {
@@ -222,12 +248,25 @@ export default function ChinaMap() {
     const handleProvinceHover = (params) => {
       const province = resolveProvinceByChineseName(params.name)
       if (province) {
-        setActiveProvinceId(province.id)
+        setHoverProvinceId(province.id)
       }
     }
 
+    const handleProvinceSelect = (params) => {
+      const province = resolveProvinceByChineseName(params.name)
+      if (province) {
+        setSelectedProvinceId(province.id)
+        setHoverProvinceId(null)
+      }
+    }
+
+    const handleMapOut = () => {
+      setHoverProvinceId(null)
+    }
+
     chart.on('mouseover', 'series.map', handleProvinceHover)
-    chart.on('click', 'series.map', handleProvinceHover)
+    chart.on('click', 'series.map', handleProvinceSelect)
+    chart.on('globalout', handleMapOut)
 
     const handleResize = () => chart.resize()
     window.addEventListener('resize', handleResize)
@@ -236,6 +275,7 @@ export default function ChinaMap() {
       window.removeEventListener('resize', handleResize)
       chart.dispose()
       chartInstanceRef.current = null
+      mapOptionInitializedRef.current = false
     }
   }, [])
 
@@ -245,79 +285,133 @@ export default function ChinaMap() {
       return
     }
 
-    chart.setOption({
-      backgroundColor: 'transparent',
-      tooltip: {
-        trigger: 'item',
-        formatter: (params) => {
-          const province = resolveProvinceByChineseName(params.name)
-          return province
-            ? `${province.name}<br/>${province.chineseName}<br/>${province.region}`
-            : params.name
+    if (!mapOptionInitializedRef.current) {
+      chart.setOption({
+        backgroundColor: 'transparent',
+        tooltip: {
+          trigger: 'item',
+          formatter: (params) => {
+            const province = resolveProvinceByChineseName(params.name)
+            return province
+              ? `${province.name}<br/>${province.region}`
+              : params.name
+          },
         },
-      },
-      geo: {
-        map: 'china',
-        roam: true,
-        zoom: 1.15,
-        scaleLimit: {
-          min: 1,
-          max: 4,
-        },
-        label: {
-          show: true,
-          color: '#1B2A4A',
-          fontSize: 10,
-        },
-        itemStyle: {
-          areaColor: '#D9D0C3',
-          borderColor: '#ffffff',
-          borderWidth: 1,
-        },
-        emphasis: {
+        geo: {
+          map: 'china',
+          roam: true,
+          zoom: 1.15,
+          scaleLimit: {
+            min: 1,
+            max: 4,
+          },
           label: {
             show: true,
-            color: '#ffffff',
-            fontWeight: 'bold',
+            color: '#1B2A4A',
+            fontSize: 10,
+            formatter: formatProvinceLabel,
+            rich: {
+              capital: {
+                color: '#FFD400',
+                fontWeight: 'bold',
+                fontSize: 14,
+              },
+            },
           },
           itemStyle: {
-            areaColor: '#C41E3A',
+            areaColor: '#D9D0C3',
+            borderColor: '#ffffff',
+            borderWidth: 1,
+          },
+          emphasis: {
+            label: {
+              show: true,
+              color: '#ffffff',
+              fontWeight: 'bold',
+              formatter: formatProvinceLabel,
+              rich: {
+                capital: {
+                  color: '#FFE66D',
+                  fontWeight: 'bold',
+                  fontSize: 15,
+                },
+              },
+            },
+            itemStyle: {
+              areaColor: '#C41E3A',
+            },
           },
         },
-      },
-      series: [
-        {
-          type: 'map',
-          map: 'china',
-          geoIndex: 0,
-          name: 'China Provinces',
-          selectedMode: false,
-          data: buildMapData(activeProvinceId),
-        },
-      ],
-    }, true)
+        series: [
+          {
+            id: 'china-province-series',
+            type: 'map',
+            map: 'china',
+            geoIndex: 0,
+            name: 'China Provinces',
+            selectedMode: false,
+            label: {
+              show: true,
+              formatter: formatProvinceLabel,
+              rich: {
+                capital: {
+                  color: '#FFD400',
+                  fontWeight: 'bold',
+                  fontSize: 14,
+                },
+              },
+            },
+            emphasis: {
+              label: {
+                show: true,
+                formatter: formatProvinceLabel,
+                rich: {
+                  capital: {
+                    color: '#FFE66D',
+                    fontWeight: 'bold',
+                    fontSize: 15,
+                  },
+                },
+              },
+            },
+            data: buildMapData(displayProvince.id),
+          },
+        ],
+      })
+      mapOptionInitializedRef.current = true
+    } else {
+      chart.setOption({
+        series: [
+          {
+            id: 'china-province-series',
+            data: buildMapData(displayProvince.id),
+          },
+        ],
+      })
+    }
 
-    chart.dispatchAction({ type: 'highlight', seriesIndex: 0, name: activeProvince.chineseName })
-  }, [activeProvince, activeProvinceId])
+    chart.dispatchAction({ type: 'downplay', seriesIndex: 0 })
+    chart.dispatchAction({ type: 'highlight', seriesIndex: 0, name: displayProvince.chineseName })
+  }, [displayProvince])
 
   return (
     <div className="min-h-screen bg-[#f5f0eb] pt-20">
-      <section className="px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-8 text-center">
+      <section className="px-3 py-5 sm:px-5 lg:px-6 lg:py-6">
+        <div className="mx-auto w-full">
+          <div className="mb-5 text-center lg:mb-6">
             <p className="text-sm uppercase tracking-[0.25em] text-china-red font-semibold">
               Province Photo Wall
             </p>
             <h1 className="section-title mb-3">China Travel Memory Map</h1>
             <p className="section-subtitle">
-              Move across the provinces to reveal travel memories, then open each photo for a closer look.
+              Hover to preview a province, click to keep its photos open, then select a photo for a closer look.
             </p>
           </div>
 
-          <div className="relative min-h-[820px] overflow-hidden rounded-2xl border border-deep-blue/10 bg-[#d9d0c3] p-4 shadow-2xl">
-            <div className="absolute inset-4 rounded-2xl border border-white/50"></div>
+          <div className="relative overflow-hidden rounded-2xl border border-deep-blue/10 bg-[#d9d0c3] p-4 shadow-2xl md:h-[calc(100vh-13rem)] md:min-h-[760px] lg:h-[calc(100vh-12rem)]">
+            <div className="pointer-events-none absolute inset-4 rounded-2xl border border-white/50"></div>
 
-            <svg className="pointer-events-none absolute inset-0 z-10 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <svg className="pointer-events-none absolute inset-0 z-10 hidden h-full w-full md:block" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
               {wallPhotos.map((photo) => (
                 <line
                   key={photo.id}
@@ -332,28 +426,27 @@ export default function ChinaMap() {
               ))}
             </svg>
 
+            <div className="relative z-20 mt-5 h-[56vh] min-h-[360px] overflow-hidden rounded-2xl border border-white/60 bg-[#ebe3d6] shadow-2xl md:absolute md:left-1/2 md:top-[45%] md:mt-0 md:h-[min(78%,820px)] md:w-[min(72%,1120px)] md:min-h-0 md:-translate-x-1/2 md:-translate-y-1/2 xl:w-[min(68%,1280px)]">
+              <div ref={chartRef} className="h-full w-full" aria-label="Interactive ECharts China map" />
+              <div className="pointer-events-none absolute left-5 top-5 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-deep-blue shadow">
+                <ProvinceDisplayName province={displayProvince} />
+              </div>
+            </div>
+
             <PhotoWall
               photos={wallPhotos}
-              onActivateProvince={setActiveProvinceId}
               onOpenImage={setPreviewPhoto}
               onImageLoad={handleImageLoad}
             />
 
-            <div className="absolute left-1/2 top-[45%] z-20 h-[620px] w-[min(58%,660px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-2xl border border-white/60 bg-[#ebe3d6] shadow-2xl">
-              <div ref={chartRef} className="h-full w-full" aria-label="Interactive ECharts China map" />
-              <div className="pointer-events-none absolute left-5 top-5 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-deep-blue shadow">
-                {activeProvince.name} / {activeProvince.chineseName}
-              </div>
-            </div>
-
-            <div className="absolute bottom-5 left-1/2 z-40 w-[min(92%,760px)] -translate-x-1/2 rounded-2xl bg-white/95 p-4 shadow-xl backdrop-blur">
+            <div className="relative z-40 mt-5 rounded-2xl bg-white/95 p-4 shadow-xl backdrop-blur md:absolute md:bottom-5 md:left-1/2 md:mt-0 md:w-[min(92%,900px)] md:-translate-x-1/2">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
                   <p className="text-xs uppercase tracking-[0.22em] text-china-red font-semibold">
-                    {activeProvince.region}
+                    {selectedProvince.region}
                   </p>
                   <h2 className="text-2xl font-display font-bold text-deep-blue">
-                    {activeProvince.name} / {activeProvince.chineseName}
+                    <ProvinceDisplayName province={selectedProvince} />
                   </h2>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -361,16 +454,16 @@ export default function ChinaMap() {
                     <button
                       key={image.title}
                       type="button"
-                      onClick={() => setPreviewPhoto({ ...image, province: activeProvince })}
-                      className="inline-flex items-center gap-2 rounded-full bg-warm-gray py-1 pl-1 pr-3 text-xs font-medium text-deep-blue transition-colors hover:bg-china-red hover:text-white"
+                      onClick={() => setPreviewPhoto({ ...image, province: selectedProvince })}
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-warm-gray p-1 transition-colors hover:bg-china-red focus:outline-none focus:ring-2 focus:ring-china-red focus:ring-offset-2"
+                      aria-label={`Open ${selectedProvince.name} photo`}
                     >
                       <img
                         src={image.url}
                         alt={image.title}
                         onLoad={(event) => handleImageLoad(image.url, event.currentTarget)}
-                        className="h-7 w-7 rounded-full object-cover"
+                        className="h-8 w-8 rounded-full object-cover"
                       />
-                      {image.title}
                     </button>
                   )) : (
                     <span className="rounded-full bg-warm-gray px-4 py-2 text-xs font-medium text-gray-500">
