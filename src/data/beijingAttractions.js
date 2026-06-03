@@ -99,8 +99,8 @@ export const beijingAttractions = [
       'A rickshaw tour through the hutongs reveals hidden courtyards, local eateries, and the warm hospitality of residents who have lived here for generations.',
       'The hutongs near the Drum and Bell Towers are among the most atmospheric, with traditional architecture framing views of these ancient timekeepers.'
     ],
-    image: 'https://images.unsplash.com/photo-1584450150502-2795e9d0f662?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1584450150502-2795e9d0f662?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Hutong%20Gasse%20Peking%20China%20%2844042315190%29.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Hutong%20Gasse%20Peking%20China%20%2844042315190%29.jpg?width=1600',
     rating: 4.5,
     openingHours: 'Open 24 hours (public alleys); shops and venues vary',
     ticketPrice: 'Free to walk; rickshaw tours ¥150–300 (≈ $22–45)',
@@ -121,8 +121,8 @@ export const beijingAttractions = [
       'From avant-garde paintings and sculptures to multimedia installations and performance art, 798 showcases the incredible diversity and energy of Chinese creative expression.',
       'The district also features trendy cafés, boutique shops, and outdoor sculptures that make it a perfect destination for art lovers and culture seekers alike.'
     ],
-    image: 'https://images.unsplash.com/photo-1549887534-1541e9326642?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1549887534-1541e9326642?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Beijing%20798%20Art%20District.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Beijing%20798%20Art%20District.jpg?width=1600',
     rating: 4.4,
     openingHours: 'Most galleries: 10:00 AM – 6:00 PM; some closed Mondays',
     ticketPrice: 'Free entry; individual gallery admissions vary',
@@ -143,8 +143,8 @@ export const beijingAttractions = [
       'The fragrant incense smoke rising from the temple\'s enormous bronze burners creates an ethereal atmosphere that draws both devoted pilgrims and curious visitors.',
       'Architecturally, the temple beautifully blends Han Chinese and Tibetan styles, reflecting the cultural integration that defined the Qing Dynasty\'s approach to its diverse empire.'
     ],
-    image: 'https://images.unsplash.com/photo-1553522991-71439aa62779?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1553522991-71439aa62779?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Yonghe%20Temple%2C%20Peking.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Yonghe%20Temple%2C%20Peking.jpg?width=1600',
     rating: 4.6,
     openingHours: '9:00 AM – 4:30 PM (Nov–Mar), 9:00 AM – 5:00 PM (Apr–Oct)',
     ticketPrice: '¥25 (≈ $4)',
@@ -165,8 +165,8 @@ export const beijingAttractions = [
       'Despite its commercialization, Nanluoguxiang retains the authentic charm of old Beijing, with gray brick walls, red doors, and traditional rooflines framing the modern shops.',
       'It\'s the perfect place to spend an afternoon browsing unique souvenirs, sampling local snacks, and soaking in the blend of historic and contemporary Beijing culture.'
     ],
-    image: 'https://images.unsplash.com/photo-1504432842672-1a79f78e4084?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1504432842672-1a79f78e4084?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Beijing%20Nanluoguxiang%20%E5%8D%97%E9%94%A3%E9%BC%93%E5%B7%B7%20-%20panoramio.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Beijing%20Nanluoguxiang%20%E5%8D%97%E9%94%A3%E9%BC%93%E5%B7%B7%20-%20panoramio.jpg?width=1600',
     rating: 4.3,
     openingHours: 'Shops typically 10:00 AM – 10:00 PM; street always accessible',
     ticketPrice: 'Free',

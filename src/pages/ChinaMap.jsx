@@ -51,8 +51,36 @@ const regionColors = {
   Northwest: '#E7C7A5',
 }
 
+const minProvincePhotos = 5
+const maxProvincePhotos = 7
+
 function resolveImages(provinceId) {
-  return provinceImageLibrary[provinceId] || []
+  const imageMap = new Map()
+
+  ;(provinceImageLibrary[provinceId] || []).forEach((image) => {
+    if (!image?.url || imageMap.has(image.url)) {
+      return
+    }
+
+    imageMap.set(image.url, image)
+  })
+
+  return Array.from(imageMap.values())
+}
+
+function pickRandomImages(images) {
+  if (images.length <= minProvincePhotos) {
+    return images
+  }
+
+  const photoCount = Math.min(
+    images.length,
+    minProvincePhotos + Math.floor(Math.random() * (maxProvincePhotos - minProvincePhotos + 1))
+  )
+
+  return [...images]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, photoCount)
 }
 
 function resolveProvinceByChineseName(name) {
@@ -112,14 +140,15 @@ function buildMapData(activeProvinceId) {
 const photoSlots = [
   { x: 13, y: 19, rotate: -6 },
   { x: 87, y: 19, rotate: 5 },
+  { x: 50, y: 11, rotate: 2, orientation: 'landscape' },
   { x: 13, y: 51, rotate: 4, orientation: 'landscape' },
   { x: 87, y: 51, rotate: -5, orientation: 'landscape' },
   { x: 18, y: 80, rotate: -3, orientation: 'landscape' },
   { x: 82, y: 80, rotate: 4, orientation: 'landscape' },
 ]
 
-function buildProvincePhotos(activeProvince, orientationByUrl) {
-  return resolveImages(activeProvince.id).map((image, index) => ({
+function buildProvincePhotos(activeProvince, images, orientationByUrl) {
+  return images.map((image, index) => ({
     ...photoSlots[index],
     ...image,
     id: `${activeProvince.id}-${image.title}`,
@@ -220,10 +249,13 @@ export default function ChinaMap() {
   const [orientationByUrl, setOrientationByUrl] = useState({})
   const selectedProvince = getProvince(selectedProvinceId) || chinaProvinces[0]
   const displayProvince = getProvince(hoverProvinceId) || selectedProvince
-  const activeImages = useMemo(() => resolveImages(selectedProvince.id), [selectedProvince.id])
+  const activeImages = useMemo(
+    () => pickRandomImages(resolveImages(selectedProvince.id)),
+    [selectedProvince.id]
+  )
   const wallPhotos = useMemo(
-    () => buildProvincePhotos(selectedProvince, orientationByUrl),
-    [selectedProvince, orientationByUrl]
+    () => buildProvincePhotos(selectedProvince, activeImages, orientationByUrl),
+    [selectedProvince, activeImages, orientationByUrl]
   )
 
   const handleImageLoad = (url, image) => {
@@ -248,6 +280,7 @@ export default function ChinaMap() {
     const handleProvinceHover = (params) => {
       const province = resolveProvinceByChineseName(params.name)
       if (province) {
+        setSelectedProvinceId(province.id)
         setHoverProvinceId(province.id)
       }
     }
@@ -467,7 +500,7 @@ export default function ChinaMap() {
                     </button>
                   )) : (
                     <span className="rounded-full bg-warm-gray px-4 py-2 text-xs font-medium text-gray-500">
-                      No photos yet
+                      Add photos to pic/province/{selectedProvince.id}
                     </span>
                   )}
                 </div>

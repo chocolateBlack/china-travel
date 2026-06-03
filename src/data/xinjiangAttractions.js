@@ -28,8 +28,8 @@ export const xinjiangAttractions = [
       'Snowy peaks, blue water, and forested slopes give the area a very different feeling from China\'s eastern cities.',
       'It works well as a first Xinjiang stop before heading deeper into northern or western routes.'
     ],
-    image: 'https://images.unsplash.com/photo-1757069540493-8f74088b3269?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1757069540493-8f74088b3269?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Tianchi%20Heavenly%20Lake%20%2841516480271%29.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Tianchi%20Heavenly%20Lake%20%2841516480271%29.jpg?width=1600',
     rating: 4.6,
     openingHours: 'Typically daytime scenic-area hours; check seasonal notices before visiting',
     ticketPrice: 'Scenic-area ticket and shuttle fees vary by season',

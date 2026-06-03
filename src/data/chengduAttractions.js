@@ -99,8 +99,8 @@ export const chengduAttractions = [
       'Well Alley (Jing Xiangzi) is the most contemporary, featuring bars, nightclubs, and innovative restaurants that pulse with energy after dark.',
       'Together, these three alleys offer a perfect microcosm of Chengdu — a city that honors its past while embracing the new with characteristic relaxed flair.'
     ],
-    image: 'https://images.unsplash.com/photo-1504432842672-1a79f78e4084?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1504432842672-1a79f78e4084?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Wide%20and%20Narrow%20Alleys%2C%20Chengdu%20%2820240905%29.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Wide%20and%20Narrow%20Alleys%2C%20Chengdu%20%2820240905%29.jpg?width=1600',
     rating: 4.4,
     openingHours: 'Shops: 10:00 AM – 10:00 PM; alleys always accessible',
     ticketPrice: 'Free',
@@ -121,8 +121,8 @@ export const chengduAttractions = [
       'Visitors can descend the steep stairway carved into the cliff to see the Buddha from foot level, or take a boat tour for the most dramatic full-view perspective from the water.',
       'This UNESCO World Heritage Site is an easy day trip from Chengdu, combining spectacular engineering, religious devotion, and stunning natural scenery along the way.'
     ],
-    image: 'https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1547981609-4b6bfe67ca0b?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Leshan%20Giant%20Buddha.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Leshan%20Giant%20Buddha.jpg?width=1600',
     rating: 4.7,
     openingHours: '7:30 AM – 6:30 PM (Apr–Oct), 8:00 AM – 5:30 PM (Nov–Mar)',
     ticketPrice: '¥80 (≈ $12) for the scenic area; boat tours ¥70 (≈ $10)',
@@ -144,8 +144,8 @@ export const chengduAttractions = [
       'The mountain\'s 36 peaks create a mystical atmosphere that has inspired poets, painters, and philosophers for nearly two millennia.',
       'A cable car on the front mountain makes the summit accessible for all fitness levels, while serious hikers can tackle the full trail for a more immersive experience.'
     ],
-    image: 'https://images.unsplash.com/photo-1546956223-7ead4ec7b858?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1546956223-7ead4ec7b858?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mount%20Qingcheng%20%2854532026803%29.jpg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mount%20Qingcheng%20%2854532026803%29.jpg?width=1600',
     rating: 4.6,
     openingHours: '8:00 AM – 5:00 PM (Mar–Nov), 8:00 AM – 4:30 PM (Dec–Feb)',
     ticketPrice: 'Front mountain: ¥80 (≈ $12), Back mountain: ¥20 (≈ $3); cable car: ¥35–60 (≈ $5–9)',
@@ -167,8 +167,8 @@ export const chengduAttractions = [
       'The Nuorilang Waterfall, at 320 meters wide, is one of China\'s most spectacular waterfalls, especially dramatic during the summer rains.',
       'While it requires a 2–3 day trip from Chengdu, the journey through the Tibetan plateau is itself an unforgettable adventure through some of China\'s most dramatic landscapes.'
     ],
-    image: 'https://images.unsplash.com/photo-1469521669194-babb45599def?w=800&h=600&fit=crop',
-    imageLarge: 'https://images.unsplash.com/photo-1469521669194-babb45599def?w=1600&h=900&fit=crop',
+    image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Jiuzhaigou%20National%20Park%20%28214837579%29.jpeg?width=800',
+    imageLarge: 'https://commons.wikimedia.org/wiki/Special:FilePath/Jiuzhaigou%20National%20Park%20%28214837579%29.jpeg?width=1600',
     rating: 4.8,
     openingHours: '7:00 AM – 6:00 PM (varies by season)',
     ticketPrice: '¥169 (≈ $25) peak season, ¥80 (≈ $12) off-season; shuttle bus: ¥90 (≈ $14)',
