@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import LogoMark from './LogoMark'
 
 const navLinks = [
   { path: '/', label: 'Home' },
@@ -65,7 +66,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-2xl">🏯</span>
+            <LogoMark className="h-9 w-9" />
             <span className="text-xl font-display font-bold text-white">
               China<span className="text-china-red">Travel</span>
             </span>

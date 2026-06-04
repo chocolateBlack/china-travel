@@ -1,6 +1,19 @@
 import BackToTop from '../components/BackToTop'
 import useFadeIn from '../hooks/useFadeIn'
 
+const teamPhotoModules = import.meta.glob('../../pic/team/*.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG,WEBP,AVIF}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+})
+
+const teamPhotos = Object.fromEntries(
+  Object.entries(teamPhotoModules).map(([path, src]) => {
+    const fileName = path.split('/').pop()
+    return [fileName, src]
+  })
+)
+
 const advantages = [
   'Quick response - 24/7 customer support, always ready to help',
   'High standard of service - Consistent quality from inquiry to drop-off',
@@ -10,9 +23,19 @@ const advantages = [
 ]
 
 const teamMembers = [
-  { name: 'Leo Li', role: 'CEO', featured: true },
-  { name: 'Luisa Liu', role: 'English guide', featured: true },
-  { name: 'Jack Zhang', role: 'English / Italian guide', note: '10+ years leading tours' },
+  { name: 'Leo Li', role: 'CEO', photo: 'leo-li.jpg' },
+  {
+    name: 'Luisa Liu',
+    role: 'English guide',
+    note: '10+ years experience as an English tour guide',
+    photo: 'luisa-liu.jpg',
+  },
+  {
+    name: 'Jack Zhang',
+    role: 'English / Italian guide',
+    note: '10+ years leading tours',
+    photo: 'jack-zhang.png',
+  },
   { name: 'Jack Wang', role: 'Spanish guide' },
   { name: 'Wendy Liu', role: 'France guide' },
   { name: 'Linda Zhao', role: 'English guide' },
@@ -45,11 +68,22 @@ function getInitials(name) {
 }
 
 function TeamMemberCard({ member }) {
+  const photoSrc = member.photo ? teamPhotos[member.photo] : null
+
   return (
     <article className="rounded-xl bg-white p-5 text-center shadow-sm ring-1 ring-deep-blue/5 transition-shadow hover:shadow-md">
-      <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-deep-blue text-xl font-display font-bold text-gold shadow-inner">
-        {getInitials(member.name)}
-      </div>
+      {photoSrc ? (
+        <img
+          src={photoSrc}
+          alt={`${member.name} portrait`}
+          className="mx-auto mb-4 h-20 w-20 rounded-full object-cover object-top shadow-inner ring-2 ring-gold/30"
+          loading="lazy"
+        />
+      ) : (
+        <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-deep-blue text-xl font-display font-bold text-gold shadow-inner">
+          {getInitials(member.name)}
+        </div>
+      )}
       <h3 className="font-display text-lg font-bold text-deep-blue">{member.name}</h3>
       <p className="mt-1 text-sm font-medium text-china-red">{member.role}</p>
       {member.note && (

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import LogoMark from './LogoMark'
 
 const footerLinks = {
   'Destinations': [
@@ -24,7 +25,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <span className="text-3xl">🏯</span>
+              <LogoMark className="h-10 w-10" />
               <span className="text-2xl font-display font-bold">
                 China<span className="text-china-red">Travel</span>
               </span>
