@@ -16,7 +16,7 @@ const destinationLinks = [
 ]
 
 const whatsappLink = 'https://wa.me/8613810338903'
-const emailLink = 'mailto:leoguidechina@gmail.com'
+const emailLink = 'mailto:liqiuchi0108@gmail.com'
 
 function WhatsAppIcon({ className = 'w-5 h-5' }) {
   return (

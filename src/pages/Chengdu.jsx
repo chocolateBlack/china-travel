@@ -134,50 +134,6 @@ export default function Chengdu() {
                       ))}
                     </div>
 
-                    {/* Practical Info */}
-                    <div className="bg-warm-gray rounded-xl p-5 space-y-3">
-                      <h4 className="font-display font-bold text-deep-blue text-sm uppercase tracking-wider">
-                        Practical Information
-                      </h4>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                        <div className="flex items-start gap-2">
-                          <span className="text-china-red mt-0.5">🕐</span>
-                          <div>
-                            <span className="font-semibold text-deep-blue">Hours:</span>
-                            <p className="text-gray-600">{attraction.openingHours}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <span className="text-china-red mt-0.5">🎫</span>
-                          <div>
-                            <span className="font-semibold text-deep-blue">Tickets:</span>
-                            <p className="text-gray-600">{attraction.ticketPrice}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <span className="text-china-red mt-0.5">📅</span>
-                          <div>
-                            <span className="font-semibold text-deep-blue">Best Time:</span>
-                            <p className="text-gray-600">{attraction.bestTime}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-2">
-                          <span className="text-china-red mt-0.5">🚇</span>
-                          <div>
-                            <span className="font-semibold text-deep-blue">Getting There:</span>
-                            <p className="text-gray-600">{attraction.howToGetThere}</p>
-                          </div>
-                        </div>
-                      </div>
-                      {attraction.tips && (
-                        <div className="flex items-start gap-2 pt-2 border-t border-gray-200">
-                          <span className="text-gold mt-0.5">💡</span>
-                          <p className="text-gray-600 text-sm">
-                            <span className="font-semibold text-deep-blue">Tip:</span> {attraction.tips}
-                          </p>
-                        </div>
-                      )}
-                    </div>
                   </div>
                 </div>
               </div>
