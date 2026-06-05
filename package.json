@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vercel/speed-insights": "^2.0.0",
     "@vercel/analytics": "^2.0.1",
     "china-map-data": "^1.0.4",
     "echarts": "^6.1.0",
