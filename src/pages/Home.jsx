@@ -10,6 +10,7 @@ import useFadeIn from '../hooks/useFadeIn'
 import { beijingAttractions } from '../data/beijingAttractions'
 import { chengduAttractions } from '../data/chengduAttractions'
 import { xinjiangAttractions } from '../data/xinjiangAttractions'
+import { zhangjiajieAttractions } from '../data/zhangjiajieAttractions'
 import { faqData } from '../data/faqData'
 import greatWallImage from '../../pic/greatwall.png'
 
@@ -70,6 +71,13 @@ const destinations = [
     image: 'https://images.unsplash.com/photo-1774686030653-770296f85625?w=800&h=600&fit=crop',
     link: '/xinjiang',
   },
+  {
+    title: 'Zhangjiajie',
+    chineseTitle: '张家界',
+    description: 'Step into a mountain world of sandstone pillars, misty valleys, cliff walks, and glass skybridges. Zhangjiajie turns nature into pure drama, with Wulingyuan\'s peak forests and Tianmen Mountain\'s sky-high roads offering some of China\'s most surreal scenery.',
+    image: zhangjiajieAttractions[0].image,
+    link: '/zhangjiajie',
+  },
 ]
 
 const galleryImages = [
@@ -94,10 +102,12 @@ export default function Home() {
   ))
   const chengduHighlights = chengduAttractions.slice(0, 4)
   const xinjiangHighlights = xinjiangAttractions.slice(0, 4)
+  const zhangjiajieHighlights = zhangjiajieAttractions.slice(0, 4)
   const destinationHighlights = [
     { name: 'Beijing', basePath: '/beijing', attractions: beijingHighlights },
     { name: 'Chengdu', basePath: '/chengdu', attractions: chengduHighlights },
     { name: 'Xinjiang', basePath: '/xinjiang', attractions: xinjiangHighlights },
+    { name: 'Zhangjiajie', basePath: '/zhangjiajie', attractions: zhangjiajieHighlights },
   ]
 
   return (

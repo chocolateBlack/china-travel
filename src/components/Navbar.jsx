@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { track } from '@vercel/analytics/react'
 import LogoMark from './LogoMark'
 
 const navLinks = [
@@ -13,10 +14,18 @@ const destinationLinks = [
   { path: '/beijing', label: 'Beijing' },
   { path: '/chengdu', label: 'Chengdu' },
   { path: '/xinjiang', label: 'Xinjiang' },
+  { path: '/zhangjiajie', label: 'Zhangjiajie' },
 ]
 
 const whatsappLink = 'https://wa.me/8613810338903'
 const emailLink = 'mailto:liqiuchi0108@gmail.com'
+
+function trackContactClick(channel) {
+  track('contact_click', {
+    channel,
+    location: 'navbar',
+  })
+}
 
 function WhatsAppIcon({ className = 'w-5 h-5' }) {
   return (
@@ -152,6 +161,7 @@ export default function Navbar() {
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackContactClick('whatsapp')}
               aria-label="Open WhatsApp"
               title="WhatsApp"
               className="inline-flex h-9 items-center gap-2 rounded-full bg-[#25D366] px-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-[#1ebe5d] hover:shadow-md"
@@ -162,6 +172,7 @@ export default function Navbar() {
 
             <a
               href={emailLink}
+              onClick={() => trackContactClick('email')}
               aria-label="Send email"
               title="Email"
               className="inline-flex h-9 items-center gap-2 rounded-full bg-white px-3 text-sm font-semibold text-deep-blue shadow-sm transition-all duration-200 hover:bg-china-red-light hover:text-white hover:shadow-md"
@@ -263,6 +274,7 @@ export default function Navbar() {
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackContactClick('whatsapp')}
               aria-label="Open WhatsApp"
               className="flex w-full items-center gap-3 rounded-lg px-4 py-2 text-base font-medium text-white/90 transition-colors hover:bg-white/5 hover:text-white"
             >
@@ -274,6 +286,7 @@ export default function Navbar() {
 
             <a
               href={emailLink}
+              onClick={() => trackContactClick('email')}
               aria-label="Send email"
               className="flex w-full items-center gap-3 rounded-lg px-4 py-2 text-base font-medium text-white/90 transition-colors hover:bg-white/5 hover:text-white"
             >

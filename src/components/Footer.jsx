@@ -5,6 +5,8 @@ const footerLinks = {
   'Destinations': [
     { label: 'Beijing', path: '/beijing' },
     { label: 'Chengdu', path: '/chengdu' },
+    { label: 'Xinjiang', path: '/xinjiang' },
+    { label: 'Zhangjiajie', path: '/zhangjiajie' },
   ],
   'Travel Info': [
     { label: 'Visa & Entry', path: '/travel-guide' },

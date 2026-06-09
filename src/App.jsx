@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import Beijing from './pages/Beijing'
 import Chengdu from './pages/Chengdu'
 import Xinjiang from './pages/Xinjiang'
+import Zhangjiajie from './pages/Zhangjiajie'
 import ChinaMap from './pages/ChinaMap'
 import TravelGuide from './pages/TravelGuide'
 import About from './pages/About'
@@ -23,6 +24,7 @@ function App() {
           <Route path="/beijing" element={<Beijing />} />
           <Route path="/chengdu" element={<Chengdu />} />
           <Route path="/xinjiang" element={<Xinjiang />} />
+          <Route path="/zhangjiajie" element={<Zhangjiajie />} />
           <Route path="/china-map" element={<ChinaMap />} />
           <Route path="/travel-guide" element={<TravelGuide />} />
           <Route path="/about" element={<About />} />
