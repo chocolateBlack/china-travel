@@ -280,7 +280,6 @@ export default function ChinaMap() {
     const handleProvinceHover = (params) => {
       const province = resolveProvinceByChineseName(params.name)
       if (province) {
-        setSelectedProvinceId(province.id)
         setHoverProvinceId(province.id)
       }
     }
@@ -437,7 +436,7 @@ export default function ChinaMap() {
             </p>
             <h1 className="section-title mb-3">China Travel Memory Map</h1>
             <p className="section-subtitle">
-              Hover to preview a province, click to keep its photos open, then select a photo for a closer look.
+              Hover to highlight a province, click to switch its photos, then select a photo for a closer look.
             </p>
           </div>
 
